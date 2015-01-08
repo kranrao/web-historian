@@ -65,7 +65,7 @@ exports.isURLArchived = function(url){
 exports.downloadUrls = function(url){
   request.get(url, function(err, res){
     if(err){
-      console.log(err)
+      console.log('error occured');
       return;
     }
     fs.writeFile(exports.paths.archivedSites + '/' + url, res.buffer.toString(), function(err, data){

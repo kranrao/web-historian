@@ -14,3 +14,7 @@ var downloadMissingUrls = function(){
 };
 
 downloadMissingUrls();
+
+// cron instructions
+// create new cron: crontab -e
+// cron job (run every minute): */1 * * * *  /Users/student/.nvm/v0.10.26/bin/node /Users/student/Desktop/2014-12-web-historian/workers/htmlfetcher.js
