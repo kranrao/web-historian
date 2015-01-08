@@ -15,6 +15,12 @@ var actions = {
         res.writeHead(200, httpHelpers.headers);
         res.end(data.toString());
       });
+    } else if (req.url === '/styles.css') {
+      fs.readFile(archive.paths.siteAssets + '/styles.css', function(err, data){
+        // not sending all headers, just content-type
+        res.writeHead(200, {'Content-Type': 'text/css'});
+        res.end(data.toString());
+      });
     } else {
       fs.readFile(archive.paths.archivedSites + req.url, function(err, data){
         if (err){
