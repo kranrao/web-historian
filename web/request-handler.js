@@ -4,10 +4,11 @@ var httpHelpers = require('./http-helpers');
 var fs = require('fs');
 // require more modules/folders here!
 
-exports.handleRequest = function (req, res) {
-  if (req.method === 'GET'){
-    res.writeHead(200, httpHelpers.headers);
+// router object - refactor in future so that code is dryer (review previous solution)
+var actions = {
+  GET: function(req, res){
 
+    res.writeHead(200, httpHelpers.headers);
     // In future use url parse to do this correctly
     if (req.url === '/'){
       fs.readFile(archive.paths.siteAssets + '/index.html', function(err, data){
@@ -18,6 +19,19 @@ exports.handleRequest = function (req, res) {
         res.end(data.toString());
       });
     }
+  },
+  POST: function(req, res){
+
+  },
+  OPTIONS: function(req, res){
+
   }
-  /*res.end();*/
+};
+
+exports.handleRequest = function (req, res) {
+
+  var action = actions[req.method];
+  if (action) {
+    action(req, res);
+  }
 };
