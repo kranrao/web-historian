@@ -21,6 +21,20 @@ var actions = {
     }
   },
   POST: function(req, res){
+    var data = '';
+    // on data, chunk post url
+    req.on('data', function(chunk){
+      data += chunk;
+    });
+
+    // on end, write that data onto sites.txt and add '\n
+    req.on('end', function(){
+      fs.writeFile(archive.paths.list, data.split('=')[1] + '\n', function(){
+        // after all is done, send response 302 to client
+        res.writeHead(302, httpHelpers.headers);
+        res.end();
+      });
+    });
 
   },
   OPTIONS: function(req, res){
