@@ -7,20 +7,28 @@ var fs = require('fs');
 // router object - refactor in future so that code is dryer (review previous solution)
 var actions = {
   GET: function(req, res){
+    console.log(req.url);
 
-    res.writeHead(200, httpHelpers.headers);
     // In future use url parse to do this correctly
     if (req.url === '/'){
       fs.readFile(archive.paths.siteAssets + '/index.html', function(err, data){
+        res.writeHead(200, httpHelpers.headers);
         res.end(data.toString());
       });
     } else {
       fs.readFile(archive.paths.archivedSites + req.url, function(err, data){
-        res.end(data.toString());
+        if (err){
+          res.writeHead(404, httpHelpers.headers);
+          res.end();
+        } else {
+          res.writeHead(200, httpHelpers.headers);
+          res.end(data.toString());
+        }
       });
     }
   },
   POST: function(req, res){
+    console.log(req.url);
     var data = '';
     // on data, chunk post url
     req.on('data', function(chunk){
